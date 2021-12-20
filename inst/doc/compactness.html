@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Measures of Compactness</title>
+
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Measures of Compactness</h1>
+
+
+
+<p>There are dozens of measures of compactness. This vignette introduces some of the most common and most important measures of compactness. See the vignette “Using <code>redistmetrics</code>” for the bare-bones of the package.</p>
+<p>We first load the <code>redistmetrics</code> package and data from New Hampshire. For any function, the <code>shp</code> argument can be swapped out for your data and the <code>plans</code> argument can be swapped out for your redistricting plans (be it a single plan, a matrix of plans, or a <code>redist_plans</code> object).</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(redistmetrics)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(nh)</span></code></pre></div>
+<p>The New Hampshire proposed Republican plan looks like:</p>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div id="area-based-compactness" class="section level1">
+<h1>Area-Based Compactness</h1>
+<div id="polsby-popper-compactness" class="section level2">
+<h2>Polsby-Popper Compactness</h2>
+<p>Polsby-Popper is proportional to the ratio of a districts area (<span class="math inline">\(A_D\)</span>) and its perimeter (<span class="math inline">\(P_D\)</span>). Formally, it can be written as:</p>
+<p><span class="math display">\[ \textrm{Polsby-Popper} = 4\pi\frac{A_D}{P_D}\]</span> Scores range from 0 to 1, where 0 is the least compact and 1 is the most compact.</p>
+<p>Polsby-Popper compactness can be computed with:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">comp_polsby</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.2324375 0.1582763</span></span></code></pre></div>
+<div id="schwartzberg-compactness" class="section level3">
+<h3>Schwartzberg Compactness</h3>
+<p>Schwartzberg Compactness is similar to Polsby-Popper compactness and is also based on the comparison of a district’s perimeter (<span class="math inline">\(P_D\)</span>) to its area (<span class="math inline">\(A_D\)</span>). Formally, it can be written as:</p>
+<p><span class="math display">\[ \textrm{Schwartzberg} = \frac{1}{\frac{P_D}{2\pi\sqrt{A_D/\pi}}}\]</span></p>
+<p>Scores range from 0 to 1, where 0 is the least compact and 1 is the most compact.</p>
+<p>Schwartzberg compactness can be computed with:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">comp_schwartz</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.4821177 0.3978395</span></span></code></pre></div>
+</div>
+<div id="reock-compactness" class="section level3">
+<h3>Reock Compactness</h3>
+<p>Reock compactness compares the area of the district (<span class="math inline">\(A_D\)</span>) to the area of the minimum bounding circle (<span class="math inline">\(A_{MBC}\)</span>).</p>
+<p>Formally, it can be written as:</p>
+<p><span class="math display">\[ \textrm{Reock} = \frac{A_D}{A_{MBC}} \]</span> Scores range from 0 to 1, where 0 is the least compact and 1 is the most compact.</p>
+<p>Reock compactness can be computed with:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">comp_reock</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.4444653 0.2502152</span></span></code></pre></div>
+</div>
+<div id="box-reock-compactness" class="section level3">
+<h3>Box Reock Compactness</h3>
+<p>Box Reock compactness compares the area of the district (<span class="math inline">\(A_D\)</span>) to the area of the minimum bounding rectangle (<span class="math inline">\(A_{MBR}\)</span>).</p>
+<p>Formally, it can be written as:</p>
+<p><span class="math display">\[ \textrm{Box Reock} = \frac{A_D}{A_{MBR}} \]</span></p>
+<p>Scores range from 0 to 1, where 0 is the least compact and 1 is the most compact.</p>
+<p>Box Reock compactness can be computed with:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">comp_box_reock</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.5769441 0.4196260</span></span></code></pre></div>
+</div>
+<div id="convex-hull-compactness" class="section level3">
+<h3>Convex Hull Compactness</h3>
+<p>Convex Hull compactness compares the area of the district (<span class="math inline">\(A_D\)</span>) to the area of the convex hull (<span class="math inline">\(A_{CV}\)</span>).</p>
+<p>Formally, it can be written as:</p>
+<p><span class="math display">\[ \textrm{Convex Hull} = \frac{A_D}{A_{CV}} \]</span> Scores range from 0 to 1, where 0 is the least compact and 1 is the most compact.</p>
+<p>Convex Hull compactness can be computed with:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">comp_ch</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.6763964 0.6626738</span></span></code></pre></div>
+</div>
+<div id="skew-compactness" class="section level3">
+<h3>Skew Compactness</h3>
+<p>Skew compactness compares the area of the maximum inscribed circle (<span class="math inline">\(A_{MIC}\)</span>) to the area of the minimum bounding circle (<span class="math inline">\(A_{MBC}\)</span>).</p>
+<p>Formally, it can be written as:</p>
+<p><span class="math display">\[ \textrm{Skew} = \frac{A_{MIC}}{A_{MBC}} \]</span> Scores range from 0 to 1, where 0 is the least compact and 1 is the most compact.</p>
+<p>Skew compactness can be computed with:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">comp_skew</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.3640221 0.2481286</span></span></code></pre></div>
+</div>
+<div id="x-symmetry-compactness" class="section level3">
+<h3>X-Symmetry Compactness</h3>
+<p>X-Symmetry compactness compares the area of the intersection of a district reflected over its x-axis (<span class="math inline">\(A(I(D, D^{X}))\)</span>) to the area of the district (<span class="math inline">\(A_D\)</span>).</p>
+<p>Formally, it can be written as:</p>
+<p><span class="math display">\[ \textrm{X-Symmetry} = \frac{A(I(D, D^{X}))}{A_D} \]</span> Scores range from 0 to 1, where 0 is the least compact and 1 is the most compact.</p>
+<p>X-Symmetry compactness can be computed with:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">comp_x_sym</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.6995961 0.3436371</span></span></code></pre></div>
+</div>
+<div id="y-symmetry-compactness" class="section level3">
+<h3>Y-Symmetry Compactness</h3>
+<p>Y-Symmetry compactness compares the area of the intersection of a district reflected over its y-axis (<span class="math inline">\(A(I(D, D^{Y}))\)</span>) to the area of the district (<span class="math inline">\(A_D\)</span>).</p>
+<p>Formally, it can be written as:</p>
+<p><span class="math display">\[ \textrm{Y-Symmetry} = \frac{A(I(D, D^{Y}))}{A_D} \]</span> Scores range from 0 to 1, where 0 is the least compact and 1 is the most compact.</p>
+<p>Y-Symmetry compactness can be computed with:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">comp_y_sym</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.7307813 0.4346136</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="distance-based-compactness" class="section level1">
+<h1>Distance-Based Compactness</h1>
+<div id="length-width-compactness" class="section level3">
+<h3>Length-Width Compactness</h3>
+<p>Length-Width compactness compares the width and the length of a district. Given a bounding box for a district (the rectangle which surrounds a district, with top and bottom parallel to the equator and sides orthogonal to the equator), the width (<span class="math inline">\(W\)</span>) is defined as the shorter side of that box and the length (<span class="math inline">\(L\)</span>) as the longer side of that box.</p>
+<p>Formally, it can be written as:</p>
+<p><span class="math display">\[ \textrm{Length-Width} = \frac{Width}{Length} \]</span> Scores range from 0 to 1, where 0 is the least compact and 1 is the most compact.</p>
+<p>Length-Width compactness can be computed with:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">comp_lw</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.9161576 0.5223455</span></span></code></pre></div>
+</div>
+<div id="boyce-clark-compactness" class="section level3">
+<h3>Boyce-Clark Compactness</h3>
+<p>Boyce-Clark compactness looks at the distance from the interior center of the shape to 16 evenly spaced radials. The interior center of the shape is defined as the centroid if that is within the shape. If it is not within the shape, we define it using a central point on its surface (using <code>geos::geos_point_on_surface()</code>). With those radials, we compute the distances <span class="math inline">\(d_{r_i}\)</span> for each of the <span class="math inline">\(i = 1:16\)</span> (for the recommended <span class="math inline">\(n = 16\)</span>) radials and look at the mean absolute deviation.</p>
+<p>Formally, it can be written as:</p>
+<p><span class="math display">\[\textrm{Boyce-Clark} = \sum_{i=1}^{16}\abs{\frac{r_{i}}{\sum_{i=1}^{16} r_i} * 100 - \frac{100}{n}}\]</span> Scores range from 0 to <span class="math inline">\(\infty\)</span>, where 0 is the most compact and <span class="math inline">\(\infty\)</span> is the least compact.</p>
+<p>Boyce-Clark compactness can be computed with:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">comp_bc</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.7921350 0.8330235</span></span></code></pre></div>
+</div>
+<div id="fryer-holden-compactness" class="section level3">
+<h3>Fryer Holden Compactness</h3>
+<p>Fryer-Holden describes the person-distance achieved by the plan. Individual scores do not carry much meaning and are intended to be normalized by the minimal possible score, which can be difficult to compute. Given the population of each redistricting unit <span class="math inline">\(P_i\)</span> and the distance between two units <span class="math inline">\(D_{ij}\)</span>, then for any district <span class="math inline">\(k\)</span>, we compute the score as the squared distance between the people in unit <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>.</p>
+<p>Formally, the numerator can be written as:</p>
+<p><span class="math display">\[\sum_{k = 1}^{n_d} = \sum_{i \in k} \sum{j \in k} P_iP_jD_{ij}^2\]</span> Smaller scores are more compact. When used with a denominator, a score of 1 is most compact and higher scores are less compact.</p>
+<p>Fryer-Holden compactness can be computed with:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">comp_fh</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh, <span class="at">total_pop =</span> pop)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 5.374691e+22 5.374691e+22</span></span></code></pre></div>
+</div>
+</div>
+<div id="adjacency-based-compactness" class="section level1">
+<h1>Adjacency-Based Compactness</h1>
+<div id="edges-removed-compactness" class="section level3">
+<h3>Edges-Removed Compactness</h3>
+<p>Edges Removed compactness describes the number of edges that have to be removed from an adjacency graph to draw a district. Inuitively, the edges between redistricting units which are in districts are removed. This correlates to Polsby-Popper compactness. For a given adjacency graph <span class="math inline">\(a\)</span>, we can write out the number of edges as <span class="math inline">\(E(a)\)</span> and consider the edges removed for a plan <span class="math inline">\(\pi\)</span>.</p>
+<p>Formally, this is then written as:</p>
+<p><span class="math display">\[ Edges Removed = E(a) - E_\pi(a)\]</span> Larger scores are less compact.</p>
+<p>Edges-Removed compactness can be computed with:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">comp_edges_rem</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh, <span class="at">adj =</span> nh<span class="sc">$</span>adj)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 73 73</span></span></code></pre></div>
+</div>
+<div id="fraction-kept-compactness" class="section level3">
+<h3>Fraction Kept Compactness</h3>
+<p>Fraction Kept compactness describes the fraction of edges that have to be kept when an adjacency graph is cut to form a district. This is rescaling of Edges Removed Compactness for more consistent interpretation. For a given adjacency graph <span class="math inline">\(a\)</span>, we can write out the number of edges as <span class="math inline">\(E(a)\)</span> and consider the edges removed for a plan <span class="math inline">\(\pi\)</span>.</p>
+<p>Formally, this is then written as:</p>
+<p><span class="math display">\[ Fraction Kept = \frac{E(a) - E_\pi(a)}{E(a)}\]</span> Scores range from 0 to 1 where 0 is least compact and 1 is most compact.</p>
+<p>Fraction Kept compactness can be computed with:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">comp_frac_kept</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh, <span class="at">adj =</span> nh<span class="sc">$</span>adj)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.9584755 0.9584755</span></span></code></pre></div>
+</div>
+<div id="log-spanning-tree-compactness" class="section level3">
+<h3>Log Spanning Tree Compactness</h3>
+<p>For a given adjacency graph, we can consider some set of spanning trees that can be drawn from it. The number of such spanning trees <span class="math inline">\(n_st\)</span> can be constrained more meaningfully by first drawing spanning trees within districts, which describes the compactness component of the Sequential Monte Carlo (McCartan and Imai 2020) algorithm.</p>
+<p>Formally, it can be written as:</p>
+<p><span class="math display">\[ Log Spanning Tree = \textrm{log}(n_st)\]</span></p>
+<p>A larger number of log spanning trees is more compact.</p>
+<p>Log Spanning Tree compactness can be computed with:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">comp_log_st</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh, <span class="at">adj =</span> nh<span class="sc">$</span>adj, <span class="at">counties =</span> county)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -Inf -Inf</span></span></code></pre></div>
+</div>
+</div>
+<div id="general-notes-on-speed" class="section level1">
+<h1>General Notes on Speed</h1>
+<p>Compactness scores can be slow to compute, especially when comparing 1000s of plans with thousands of geographic units. Some basic recommendations:</p>
+<ul>
+<li>Avoid computing with block-level data where possible. Precincts or voter tabulation districts tend to be 1/100th of the units and compute much faster</li>
+<li>Use <code>rmapshaper::ms_simplify()</code> to simplify if a small degree of accuracy loss is acceptable</li>
+<li>Pre-compute <code>prep_perims()</code> once and save the output if relying on Polsby-Popper for more than a single plan.</li>
+</ul>
+<p>A rough ordering of speeds to compute:</p>
+<ol style="list-style-type: decimal">
+<li>Scores based on adjacency (Log Spanning Tree, Edges Removed, Fraction Kept)</li>
+<li>Scores with Rcpp implementations with <code>useRcpp = TRUE</code> (Polsby-Popper, Schwartzberg)</li>
+<li>Scores that can pre-process geographic operations (Fryer-Holden, Length-Width)</li>
+<li>Scores that can utilize pre-computed areas (Box Reock, Reock, Convex Hull)</li>
+<li>Scores that require multiple plan-level geographic computations (Skew, X-Symmetry, Y-Symmetry)</li>
+<li>Scores that that require creating many new geographic objects per plan (Boyce-Clark)</li>
+</ol>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

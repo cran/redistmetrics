@@ -1,0 +1,92 @@
+---
+title: "Other Measures"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Other Measures}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Redistricting is problem with many, many dimensions. This vignette introduces some useful measures related to redistricting, but with smaller categories. See the vignette "Using `redistmetrics`" for the bare-bones of the package. 
+
+We first load the `redistmetrics` package and data from New Hampshire. For any function, the `shp` argument can be swapped out for your data, `rvote` and `dvote` for any two party votes, `pop_black` for any group population, `pop` for the total population, and the `plans` argument can be swapped out for your redistricting plans (be it a single plan, a matrix of plans, or a `redist_plans` object).  
+
+```{r setup}
+library(redistmetrics)
+data(nh)
+```
+
+
+## Competitiveness
+
+### Talismanic Compactness
+
+This is a measure which offers a balance between competitiveness across the state and competitiveness within individual districts.
+
+Formally, this can be written as:
+
+$$\textrm{Talismanic Competitiveness} = T_p (1 + \alpha T_e)\beta$$
+
+where 
+
+$$ T_p = \frac{1}{n_d} * \sum_{k=1}^{n_\textrm{dists}} \big|\frac12 - \textrm{voteshare}_D\big|$$
+$$ |\frac{n_\textrm{dists} - Seats_D}{n_\textrm{dists}}-\frac12| $$
+
+Talismanic Compactness can be computed with
+
+```{r}
+compet_talisman(plans = nh$r_2020, shp = nh, rvote = nrv, dvote = ndv)
+```
+
+where `nrv` and `ndv` are averages of votes. (In general, you want to compute these scores over many elections and average them.)
+
+## Segregation
+
+### Dissimilarity
+
+Dissimilarity describes how similar the demographic proportions in districts are to the total state population's demographics.
+
+Formally, this can be written as:
+
+$$ \textrm{Dissimilarity} =  \sum_{i = 1}^{n_\textrm{dists}} \frac{(t_d |g_d - G|)}{2T*G(1 - G)}$$
+
+for a group population proportion in district $d$, $g_d$, total population in district $d$, $t_d$, a group population proportion in a state $G$, and total population in the state $T$.
+
+
+Dissimilarity can be computed with:
+
+```{r}
+seg_dissim(plans = nh$r_2020, shp = nh, group_pop = pop_black, total_pop = pop)
+```
+
+## Incumbents
+
+### Incumbent Pairings
+
+We compute incumbent pairings as the number of incumbents who are placed into a district with other incumbents beyond those allowed. Formally, this is:
+
+$$\textrm{Inc. Pairs} = \sum_{d = 1}^{\textrm{ndists}}\max(0, n^{(d)}_{inc} - 1)$$
+
+We do not have incumbent data included for New Hampshire. As such, we create fake incumbent data.
+
+```{r}
+fake_inc <- rep(FALSE, nrow(nh))
+fake_inc[c(1, 2)] <- TRUE
+```
+
+This would indicate that there are only incumbents in the first two rows of the data.
+
+Incumbent pairings can be computed with:
+
+```{r}
+inc_pairs(plans = nh$r_2020, shp = nh, inc = fake_inc)
+```
+
+

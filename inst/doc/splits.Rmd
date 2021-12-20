@@ -1,0 +1,74 @@
+---
+title: "Measures of Administrative Splits"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Measures of Administrative Splits}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This vignette introduces some of the most common measures of administrative splits. These functions are designed around common concerns generalized to keeping together "political subdivisions". See the vignette "Using `redistmetrics`" for the bare-bones of the package. 
+
+We first load the `redistmetrics` package and data from New Hampshire. For any function, the `shp` argument can be swapped out for your data, `county` for your administrative unit, and the `plans` argument can be swapped out for your redistricting plans (be it a single plan, a matrix of plans, or a `redist_plans` object).  
+
+```{r setup}
+library(redistmetrics)
+data(nh)
+```
+
+
+## Administrative Splits
+
+The most typical thing to check in a redistricting plan is how many counties are split by a plan. The units need not be counties, but are typically some form of administrative unit. (This is often of interest because, theoretically, each redistricting plan need only split one less county than it has districts.)
+
+Every unit needs to be assigned to an administrative unit.
+
+The number of administrative splits can be computed with:
+
+```{r}
+splits_admin(plans = nh$r_2020, shp = nh, admin = county)
+```
+
+
+## Sub-Administrative Splits
+
+Secondarily, we are often interested in how many municipalities are split by a plan. These units are smaller and may not cover the entire state. Units which are not assigned to a sub-administrative unit should be assigned `NA`.
+
+
+The number of sub-administrative splits can be computed with:
+
+```{r}
+splits_sub_admin(plans = nh$r_2020, shp = nh, sub_admin = county)
+```
+
+(Often you would not check `county` here, but instead some unit smaller than a county.)
+
+## Mutli-Splits
+
+Beyond knowing how many administrative units are split, we may want to know how many are split more than once. We define splitting a unit more than once as a "multi-split".
+
+Every unit needs to be assigned to an administrative unit.
+
+The number of multi-splits can be computed with:
+
+```{r}
+splits_multi(plans = nh$r_2020, shp = nh, admin = county)
+```
+
+## Counting Splits
+
+Finally, if a state has a special condition, you may be interested in how many times a particular administrative unit is split. We count here the number of districts that appear within an administrative unit. Unlike most other functions, this returns a matrix, where rows are counties and columns are plans.
+
+The number of splits for each county can be computed with:
+
+```{r}
+splits_count(plans = nh$r_2020, shp = nh, admin = county)
+```
+
