@@ -5,7 +5,7 @@
 #' @templateVar dvote TRUE
 #' @templateVar rvote TRUE
 #' @param v vote share to calculate bias at. Numeric. Default is 0.5.
-#' @template template
+#' @template template_nosf
 #'
 #' @return numeric vector
 #' @export
@@ -50,6 +50,11 @@ part_bias <- function(plans, shp, dvote, rvote, v = 0.5) {
   dcounts <- agg_p2d(vote = dvote, dm = plans, nd = nd)
   dvs <- DVS(dcounts = dcounts, rcounts = rcounts)
 
+  cli::cli_inform(
+    '{.pkg redistmetrics} 1.0.1 reverses partisan bias direction. Positive is now pro-Republican bias.',
+    .frequency = 'once', .frequency_id = 'part_bias'
+  )
+
   rep(biasatv(dvs = dvs, v = v, nd = nd), each = nd)
 }
 
@@ -59,7 +64,7 @@ part_bias <- function(plans, shp, dvote, rvote, v = 0.5) {
 #' @templateVar shp TRUE
 #' @templateVar dvote TRUE
 #' @templateVar rvote TRUE
-#' @template template
+#' @template template_nosf
 #'
 #' @return numeric vector
 #' @export
@@ -109,7 +114,7 @@ part_dseats <- function(plans, shp, dvote, rvote) {
 #' @templateVar shp TRUE
 #' @templateVar dvote TRUE
 #' @templateVar rvote TRUE
-#' @template template
+#' @template template_nosf
 #'
 #' @return numeric vector
 #' @export
@@ -156,7 +161,7 @@ part_dvs <- function(plans, shp, dvote, rvote) {
 #' @templateVar shp TRUE
 #' @templateVar dvote TRUE
 #' @templateVar rvote TRUE
-#' @template template
+#' @template template_nosf
 #'
 #' @return numeric vector
 #' @export
@@ -200,6 +205,10 @@ part_egap <- function(plans, shp, dvote, rvote) {
   rcounts <- agg_p2d(vote = rvote, dm = plans, nd = nd)
   dcounts <- agg_p2d(vote = dvote, dm = plans, nd = nd)
 
+  cli::cli_inform(
+    '{.pkg redistmetrics} 1.0.1 reverses efficiency gap direction. Positive is now pro-Republican bias.',
+    .frequency = 'once', .frequency_id = 'part_egap'
+  )
 
   rep(effgap(dcounts = dcounts, rcounts = rcounts, totvote = totvote), each = nd)
 }
@@ -210,7 +219,7 @@ part_egap <- function(plans, shp, dvote, rvote) {
 #' @templateVar shp TRUE
 #' @templateVar dvote TRUE
 #' @templateVar rvote TRUE
-#' @template template
+#' @template template_nosf
 #'
 #' @return numeric vector
 #' @export
@@ -255,6 +264,11 @@ part_egap_ep <- function(plans, shp, dvote, rvote) {
   dseat_vec <- dseats(dm = plans, rcounts = rcounts, dcounts = dcounts, nd = nd)
   dvs <- DVS(dcounts = dcounts, rcounts = rcounts)
 
+  cli::cli_inform(
+    '{.pkg redistmetrics} 1.0.1 reverses efficiency gap direction. Positive is now pro-Republican bias.',
+    .frequency = 'once', .frequency_id = 'part_egap'
+  )
+
   rep(effgapEP(dvs = dvs, dseat_vec = dseat_vec, nd = nd), each = nd)
 }
 
@@ -265,7 +279,7 @@ part_egap_ep <- function(plans, shp, dvote, rvote) {
 #' @templateVar dvote TRUE
 #' @templateVar rvote TRUE
 #' @param tau A non-negative numeric for calculating Tau Gap. Defaults to 1.
-#' @template template
+#' @template template_nosf
 #'
 #' @return numeric vector
 #' @export
@@ -318,7 +332,7 @@ part_tau_gap <- function(plans, shp, dvote, rvote, tau = 1) {
 #' @templateVar shp TRUE
 #' @templateVar dvote TRUE
 #' @templateVar rvote TRUE
-#' @template template
+#' @template template_nosf
 #'
 #' @return numeric vector
 #' @export
@@ -374,7 +388,7 @@ part_mean_median <- function(plans, shp, dvote, rvote) {
 #' @templateVar rvote TRUE
 #' @param normalize Default is TRUE Translate score to an angle?
 #' @param adjust Default is TRUE. Applies a correction to increase cross-size comparison.
-#' @template template
+#' @template template_nosf
 #'
 #' @return numeric vector
 #' @export
@@ -437,7 +451,7 @@ part_decl <- function(plans, shp, dvote, rvote, normalize = TRUE, adjust = TRUE)
 #' @templateVar shp TRUE
 #' @templateVar dvote TRUE
 #' @templateVar rvote TRUE
-#' @template template
+#' @template template_nosf
 #'
 #' @return numeric vector
 #' @export
@@ -495,7 +509,7 @@ part_decl_simple <- function(plans, shp, dvote, rvote) {
 #' @templateVar rvote TRUE
 #' @param v vote share to calculate bias at. Numeric. Default is 0.5.
 #' @param bandwidth Defaults to 0.01. A value between 0 and 1 for the step size to estimate the slope.
-#' @template template
+#' @template template_nosf
 #'
 #' @return numeric vector
 #' @export
@@ -549,7 +563,7 @@ part_resp <- function(plans, shp, dvote, rvote, v = 0.5, bandwidth = 0.01) {
 #' @templateVar shp TRUE
 #' @templateVar dvote TRUE
 #' @templateVar rvote TRUE
-#' @template template
+#' @template template_nosf
 #'
 #' @return numeric vector
 #' @export
@@ -602,7 +616,7 @@ part_lop_wins <- function(plans, shp, dvote, rvote) {
 #' @templateVar shp TRUE
 #' @templateVar dvote TRUE
 #' @templateVar rvote TRUE
-#' @template template
+#' @template template_nosf
 #'
 #' @return numeric vector
 #' @export
@@ -655,7 +669,7 @@ part_rmd <- function(plans, shp, dvote, rvote) {
 #' @templateVar shp TRUE
 #' @templateVar dvote TRUE
 #' @templateVar rvote TRUE
-#' @template template
+#' @template template_nosf
 #'
 #' @return numeric vector
 #' @export

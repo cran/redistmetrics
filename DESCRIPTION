@@ -1,7 +1,7 @@
 Package: redistmetrics
 Title: Redistricting Metrics
-Version: 1.0.0
-Date: 2021-12-17
+Version: 1.0.1
+Date: 2022-02-17
 Authors@R: c(
     person("Christopher T.", "Kenny", email = "christopherkenny@fas.harvard.edu", role = c("aut", "cre")),
     person("Cory", "McCartan", email = "cmccartan@g.harvard.edu", role = "aut"),
@@ -14,7 +14,7 @@ LazyData: true
 RoxygenNote: 7.1.2
 LinkingTo: Rcpp, RcppArmadillo
 Imports: sf, Rcpp, cli, foreach, doParallel, magrittr, dplyr, rlang,
-        geos
+        geos, wk
 URL: https://alarm-redist.github.io/redistmetrics/,
         https::/github.com/alarm-redist/redistmetrics/
 BugReports: https://github.com/alarm-redist/redistmetrics/issues
@@ -23,11 +23,11 @@ Suggests: rmarkdown, knitr, testthat (>= 3.0.0), ggplot2
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 NeedsCompilation: yes
-Packaged: 2021-12-18 02:23:17 UTC; chris
+Packaged: 2022-02-17 18:27:40 UTC; chris
 Author: Christopher T. Kenny [aut, cre],
   Cory McCartan [aut],
   Ben Fifield [aut],
   Kosuke Imai [aut]
 Maintainer: Christopher T. Kenny <christopherkenny@fas.harvard.edu>
 Repository: CRAN
-Date/Publication: 2021-12-20 09:40:02 UTC
+Date/Publication: 2022-02-17 18:52:03 UTC
