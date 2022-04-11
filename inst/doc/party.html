@@ -254,12 +254,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Republican wasted votes are defined analogously.</p>
 <p>The Efficiency Gap can be computed with:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">part_egap</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh, <span class="at">dvote =</span> ndv, <span class="at">rvote =</span> nrv)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>redistmetrics <span class="dv">1</span>.<span class="fl">0.1</span> reverses efficiency gap direction. Positive is now</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pro-Republican bias.</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -0.02007106 -0.02007106</span></span></code></pre></div>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -0.02007106 -0.02007106</span></span></code></pre></div>
 </div>
 <div id="efficiency-gap-equal-population" class="section level3">
 <h3>Efficiency Gap (Equal Population)</h3>
@@ -268,28 +263,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display">\[ \textrm{Efficiency Gap (Eq. Pop.)} = -2 * \textrm{voteshare}_D + S_D + 0.5\]</span> with <span class="math inline">\(S_D\)</span> as the seat share for Democrats.</p>
 <p>The Efficiency Gap (Equal Population) can be computed with:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">part_egap_ep</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh, <span class="at">dvote =</span> ndv, <span class="at">rvote =</span> nrv)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ```</span></span></code></pre></div>
-<p>#&gt; [1] -0.02339824 -0.02339824</p>
-<pre><code>
-### Tau Gap
-
-The $\tau$ gap is a generalization of the efficiency gap. When $\tau = 1$, it is exactly twice the efficiency gap. The $\tau$ parameter is a weighting parameter which describes how wasted votes should be weighted.
-
-Formally, this can be written as:
-
-$$ \tau\textrm{-Gap} = \frac{w_{D,\tau} - w_{R,\tau} }{w_{D,\tau} + w_{R,\tau}}$$
-where 
-
-$$w_{D, \tau} = \sum_{d = 1}^{n_\textrm{dists}} \frac{1}{\tau + 1} (2 * voteshare_D - 1)^{\tau + 1}) $$ 
-
-and $w_R$ is defined analogously.
-
-The $\tau$ Gap can be computed with:
-
-
-```r
-part_tau_gap(plans = nh$r_2020, shp = nh, dvote = ndv, rvote = nrv)
-#&gt; [1] 0.009276655 0.009276655</code></pre>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -0.02339824 -0.02339824</span></span></code></pre></div>
+</div>
+<div id="tau-gap" class="section level3">
+<h3>Tau Gap</h3>
+<p>The <span class="math inline">\(\tau\)</span> gap is a generalization of the efficiency gap. When <span class="math inline">\(\tau = 1\)</span>, it is exactly twice the efficiency gap. The <span class="math inline">\(\tau\)</span> parameter is a weighting parameter which describes how wasted votes should be weighted.</p>
+<p>Formally, this can be written as:</p>
+<p><span class="math display">\[ \tau\textrm{-Gap} = \frac{w_{D,\tau} - w_{R,\tau} }{w_{D,\tau} + w_{R,\tau}}\]</span> where</p>
+<p><span class="math display">\[w_{D, \tau} = \sum_{d = 1}^{n_\textrm{dists}} \frac{1}{\tau + 1} (2 * voteshare_D - 1)^{\tau + 1}) \]</span></p>
+<p>and <span class="math inline">\(w_R\)</span> is defined analogously.</p>
+<p>The <span class="math inline">\(\tau\)</span> Gap can be computed with:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">part_tau_gap</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh, <span class="at">dvote =</span> ndv, <span class="at">rvote =</span> nrv)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>redistmetrics <span class="dv">1</span>.<span class="fl">0.2</span> reverses tau gap direction. Positive is now pro<span class="sc">-</span>Republican</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; bias.</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -0.009276655 -0.009276655</span></span></code></pre></div>
 <p>The default is <code>tau = 1</code>.</p>
 </div>
 <div id="smoothed-seat-count-deviation" class="section level3">

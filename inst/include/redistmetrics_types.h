@@ -3,7 +3,6 @@
 #define TYPES_H
 
 #include <vector>
-
 // [[Rcpp::depends(RcppArmadillo)]]
 
 typedef std::vector<std::vector<int>> Graph;
