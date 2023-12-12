@@ -6,6 +6,7 @@
 
 #include "redistmetrics_types.h"
 #include <RcppArmadillo.h>
+#include <RcppThread.h>
 #include <Rcpp.h>
 
 namespace redistmetrics {
@@ -66,11 +67,11 @@ namespace redistmetrics {
         return Rcpp::as<NumericVector >(rcpp_result_gen);
     }
 
-    inline IntegerVector splits(IntegerMatrix dm, IntegerVector community, int nd, int max_split) {
+    inline IntegerVector splits(const IntegerMatrix& dm, const IntegerVector& community, int nd, int max_split) {
         typedef SEXP(*Ptr_splits)(SEXP,SEXP,SEXP,SEXP);
         static Ptr_splits p_splits = NULL;
         if (p_splits == NULL) {
-            validateSignature("IntegerVector(*splits)(IntegerMatrix,IntegerVector,int,int)");
+            validateSignature("IntegerVector(*splits)(const IntegerMatrix&,const IntegerVector&,int,int)");
             p_splits = (Ptr_splits)R_GetCCallable("redistmetrics", "_redistmetrics_splits");
         }
         RObject rcpp_result_gen;
@@ -106,16 +107,16 @@ namespace redistmetrics {
         return Rcpp::as<IntegerMatrix >(rcpp_result_gen);
     }
 
-    inline IntegerMatrix admin_splits_count(IntegerMatrix dm, IntegerVector admin) {
-        typedef SEXP(*Ptr_admin_splits_count)(SEXP,SEXP);
+    inline IntegerMatrix admin_splits_count(const IntegerMatrix& dm, const IntegerVector& admin, int nd, int nc) {
+        typedef SEXP(*Ptr_admin_splits_count)(SEXP,SEXP,SEXP,SEXP);
         static Ptr_admin_splits_count p_admin_splits_count = NULL;
         if (p_admin_splits_count == NULL) {
-            validateSignature("IntegerMatrix(*admin_splits_count)(IntegerMatrix,IntegerVector)");
+            validateSignature("IntegerMatrix(*admin_splits_count)(const IntegerMatrix&,const IntegerVector&,int,int)");
             p_admin_splits_count = (Ptr_admin_splits_count)R_GetCCallable("redistmetrics", "_redistmetrics_admin_splits_count");
         }
         RObject rcpp_result_gen;
         {
-            rcpp_result_gen = p_admin_splits_count(Shield<SEXP>(Rcpp::wrap(dm)), Shield<SEXP>(Rcpp::wrap(admin)));
+            rcpp_result_gen = p_admin_splits_count(Shield<SEXP>(Rcpp::wrap(dm)), Shield<SEXP>(Rcpp::wrap(admin)), Shield<SEXP>(Rcpp::wrap(nd)), Shield<SEXP>(Rcpp::wrap(nc)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -126,16 +127,16 @@ namespace redistmetrics {
         return Rcpp::as<IntegerMatrix >(rcpp_result_gen);
     }
 
-    inline NumericVector var_info_mat(IntegerMatrix m, int i, NumericVector pop) {
-        typedef SEXP(*Ptr_var_info_mat)(SEXP,SEXP,SEXP);
+    inline arma::mat var_info_mat(const arma::umat m, const arma::vec pop, int ndists, int ncores) {
+        typedef SEXP(*Ptr_var_info_mat)(SEXP,SEXP,SEXP,SEXP);
         static Ptr_var_info_mat p_var_info_mat = NULL;
         if (p_var_info_mat == NULL) {
-            validateSignature("NumericVector(*var_info_mat)(IntegerMatrix,int,NumericVector)");
+            validateSignature("arma::mat(*var_info_mat)(const arma::umat,const arma::vec,int,int)");
             p_var_info_mat = (Ptr_var_info_mat)R_GetCCallable("redistmetrics", "_redistmetrics_var_info_mat");
         }
         RObject rcpp_result_gen;
         {
-            rcpp_result_gen = p_var_info_mat(Shield<SEXP>(Rcpp::wrap(m)), Shield<SEXP>(Rcpp::wrap(i)), Shield<SEXP>(Rcpp::wrap(pop)));
+            rcpp_result_gen = p_var_info_mat(Shield<SEXP>(Rcpp::wrap(m)), Shield<SEXP>(Rcpp::wrap(pop)), Shield<SEXP>(Rcpp::wrap(ndists)), Shield<SEXP>(Rcpp::wrap(ncores)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -143,27 +144,7 @@ namespace redistmetrics {
             throw Rcpp::LongjumpException(rcpp_result_gen);
         if (rcpp_result_gen.inherits("try-error"))
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
-        return Rcpp::as<NumericVector >(rcpp_result_gen);
-    }
-
-    inline NumericVector var_info_vec(IntegerMatrix m, IntegerVector ref, NumericVector pop) {
-        typedef SEXP(*Ptr_var_info_vec)(SEXP,SEXP,SEXP);
-        static Ptr_var_info_vec p_var_info_vec = NULL;
-        if (p_var_info_vec == NULL) {
-            validateSignature("NumericVector(*var_info_vec)(IntegerMatrix,IntegerVector,NumericVector)");
-            p_var_info_vec = (Ptr_var_info_vec)R_GetCCallable("redistmetrics", "_redistmetrics_var_info_vec");
-        }
-        RObject rcpp_result_gen;
-        {
-            rcpp_result_gen = p_var_info_vec(Shield<SEXP>(Rcpp::wrap(m)), Shield<SEXP>(Rcpp::wrap(ref)), Shield<SEXP>(Rcpp::wrap(pop)));
-        }
-        if (rcpp_result_gen.inherits("interrupted-error"))
-            throw Rcpp::internal::InterruptedException();
-        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
-            throw Rcpp::LongjumpException(rcpp_result_gen);
-        if (rcpp_result_gen.inherits("try-error"))
-            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
-        return Rcpp::as<NumericVector >(rcpp_result_gen);
+        return Rcpp::as<arma::mat >(rcpp_result_gen);
     }
 
 }

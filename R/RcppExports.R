@@ -37,8 +37,8 @@ agg_p2d <- function(dm, vote, nd) {
     .Call(`_redistmetrics_agg_p2d`, dm, vote, nd)
 }
 
-dseats <- function(dm, dcounts, rcounts, nd) {
-    .Call(`_redistmetrics_dseats`, dm, dcounts, rcounts, nd)
+dseats <- function(dcounts, rcounts) {
+    .Call(`_redistmetrics_dseats`, dcounts, rcounts)
 }
 
 dseatsDVS <- function(dvs) {
@@ -109,19 +109,19 @@ distr_cty_splits <- function(dm, community, nd) {
     .Call(`_redistmetrics_distr_cty_splits`, dm, community, nd)
 }
 
-admin_splits_count <- function(dm, admin) {
-    .Call(`_redistmetrics_admin_splits_count`, dm, admin)
+admin_splits_count <- function(dm, admin, nd, nc) {
+    .Call(`_redistmetrics_admin_splits_count`, dm, admin, nd, nc)
 }
 
-var_info_mat <- function(m, i, pop) {
-    .Call(`_redistmetrics_var_info_mat`, m, i, pop)
+tally_var <- function(dm, var, nd) {
+    .Call(`_redistmetrics_tally_var`, dm, var, nd)
 }
 
-var_info_vec <- function(m, ref, pop) {
-    .Call(`_redistmetrics_var_info_vec`, m, ref, pop)
+var_info_mat <- function(m, pop, ndists, ncores) {
+    .Call(`_redistmetrics_var_info_mat`, m, pop, ndists, ncores)
 }
 
 # Register entry points for exported C++ functions
 methods::setLoadAction(function(ns) {
-    .Call('_redistmetrics_RcppExport_registerCCallable', PACKAGE = 'redistmetrics')
+    .Call(`_redistmetrics_RcppExport_registerCCallable`)
 })

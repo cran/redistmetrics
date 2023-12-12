@@ -25,6 +25,7 @@ planarize <- function(shp, epsg = 3857) {
 #'
 #' @return tibble of perimeters and lengths
 #' @export
+#' @concept compactness
 #'
 #' @examples
 #' data(nh)
@@ -63,8 +64,9 @@ prep_perims <- function(shp, epsg = 3857, perim_path, ncores = 1) {
     on.exit(parallel::stopCluster(cl))
   }
 
-  perim_adj_df <- foreach::foreach(from = 1:length(alist), .combine = 'rbind',
+  perim_adj_df <- foreach::foreach(from = seq_along(alist), .combine = 'rbind',
                                    .packages = c('sf', 'redistmetrics')) %oper% {
+                                     cat(i)
     x <- geos::geos_geometry_n(shp_col, from)
     y <- geos::geos_geometry_n(shp_col, alist[[from]])
     l <- geos::geos_intersects_matrix(x, y) %>% unlist() %>% sort()
@@ -86,11 +88,19 @@ prep_perims <- function(shp, epsg = 3857, perim_path, ncores = 1) {
   perim_adj_island <- perim_adj_df %>%
     dplyr::filter(edge == -1) %>%
     dplyr::mutate(edge = 0)
-  perim_adj_df <- perim_adj_df %>%
+
+  perim_adj_df_out <- perim_adj_df %>%
     dplyr::filter(edge > 0) %>%
     rbind(perim_adj_island)
+  queen_bug <- which(!(seq_along(alist) %in% unique(perim_adj_df_out$origin)))
+  if (length(queen_bug) > 0) {
+    perim_adj_queens <- perim_adj_df %>%
+      dplyr::filter(edge == 0, origin %in% queen_bug)
+    perim_adj_df_out <- dplyr::bind_rows(perim_adj_df_out, perim_adj_queens)
+  }
 
-  adj_boundary_lengths <- perim_adj_df %>%
+
+  adj_boundary_lengths <- perim_adj_df_out %>%
     dplyr::group_by(origin) %>%
     dplyr::summarize(perim_adj = sum(edge)) %>%
     dplyr::mutate(
@@ -102,7 +112,7 @@ prep_perims <- function(shp, epsg = 3857, perim_path, ncores = 1) {
     dplyr::select(X1, origin, perim_boundary) %>%
     dplyr::rename(origin = X1, touching = origin, edge = perim_boundary)
 
-  perim_df <- dplyr::bind_rows(perim_adj_df, adj_boundary_lengths) %>%
+  perim_df <- dplyr::bind_rows(perim_adj_df_out, adj_boundary_lengths) %>%
     dplyr::arrange(origin, touching) %>%
     dplyr::filter(!is.na(touching)) # %>% filter(touching > origin)
 

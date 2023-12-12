@@ -1,15 +1,19 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# redistmetrics <a href="https://alarm-redist.github.io/redistmetrics/"><img src="man/figures/logo.png" align="right" height="132" /></a>
+# redistmetrics <a href="https://alarm-redist.org/redistmetrics/"><img src="man/figures/logo.png" align="right" height="132" /></a>
 
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/alarm-redist/redistmetrics/workflows/R-CMD-check/badge.svg)](https://github.com/alarm-redist/redistmetrics/actions)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/redistmetrics)](https://CRAN.R-project.org/package=redistmetrics)
+![CRAN
+downloads](http://cranlogs.r-pkg.org/badges/grand-total/redistmetrics)
 <!-- badges: end -->
 
 `redistmetrics` is one of the R packages developed and maintained by the
-[ALARM Project](https://alarm-redist.github.io/). `redistmetrics`
+[ALARM Project](https://alarm-redist.org/). `redistmetrics`
 provides the back-end for the computation of summary statistics for a
 redistricting plan. It provides a more direct access point to use
 methods in `redist` without requiring `redist` objects.
@@ -126,14 +130,14 @@ library(dplyr)
 #> 
 #>     intersect, setdiff, setequal, union
 nh_plans <- nh_plans %>% mutate(polsby = comp_polsby(plans = ., shp = nh))
-#> Linking to GEOS 3.9.1, GDAL 3.2.1, PROJ 7.2.1
+#> Linking to GEOS 3.9.3, GDAL 3.5.2, PROJ 8.2.1; sf_use_s2() is TRUE
 ```
 
 Now our values are cleanly held in the `redist_plans` object:
 
 ``` r
 head(nh_plans)
-#> # A tibble: 6 x 4
+#> # A tibble: 6 × 4
 #>   draw   district total_pop polsby
 #>   <fct>     <int>     <dbl>  <dbl>
 #> 1 d_2020        1    688739  0.184
