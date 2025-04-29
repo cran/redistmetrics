@@ -8,11 +8,11 @@ knitr::opts_chunk$set(
 citation('redistmetrics')
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  if (!requireNamespace('remotes')) {
-#    install.packages('remotes')
-#  }
-#  
-#  remotes::install_github('alarm-redist/redistmetrics)
+# if (!requireNamespace('remotes')) {
+#   install.packages('remotes')
+# }
+# 
+# remotes::install_github('alarm-redist/redistmetrics)
 
 ## ----setup--------------------------------------------------------------------
 library(redistmetrics)

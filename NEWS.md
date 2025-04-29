@@ -1,3 +1,21 @@
+# redistmetrics 1.0.8
+
+* Adds support for counting splits municipalities (sub-admin) units via `splits_sub_count()`.
+* `splits_count()` and `splits_sub_count()` now include rownames in the output.
+
+# redistmetrics 1.0.7
+
+* Updates compilation flags for use of `RcppThread` on Linux.
+
+# redistmetrics 1.0.6
+
+* Resolves minor CRAN submission issues for use of `revdep` to check reverse dependencies.
+
+# redistmetrics 1.0.5
+
+* Updates to C++17.
+* Resolves minor C++ warnings (#14).
+
 # redistmetrics 1.0.4
 * Add generic function to tally a varible by plan
 * Massively speed up calculation of county/admin/muni splits as well as plan reindexing
