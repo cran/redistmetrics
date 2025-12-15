@@ -54,13 +54,41 @@ NumericMatrix DVS(NumericMatrix dcounts, NumericMatrix rcounts){
   return mat;
 }
 
+inline NumericVector calc_seat_share(const IntegerVector& dseat_vec, int nd) {
+  return (NumericVector)dseat_vec / (double)nd;
+}
+
+NumericMatrix shift_dvs(const NumericMatrix& dvs, const NumericVector& shift) {
+  NumericMatrix dvs_shifted = clone(dvs);
+  for (int c = 0; c < dvs.ncol(); c++) {
+    for (int r = 0; r < dvs.nrow(); r++) {
+      dvs_shifted(r, c) += shift(c);
+    }
+  }
+  return dvs_shifted;
+}
+
+std::pair<NumericVector, NumericVector> calc_win_sums(const NumericMatrix& dvs) {
+  NumericVector Dwin(dvs.ncol());
+  NumericVector Rwin(dvs.ncol());
+
+  for (int c = 0; c < dvs.ncol(); c++) {
+    for (int r = 0; r < dvs.nrow(); r++) {
+      if (dvs(r, c) >= .5) {
+        Dwin(c) += dvs(r, c);
+      } else {
+        Rwin(c) += dvs(r, c);
+      }
+    }
+  }
+
+  return {Dwin, Rwin};
+}
+
 // [[Rcpp::export(rng = false)]]
 NumericVector effgapEP(NumericMatrix dvs, IntegerVector dseat_vec, int nd){
   NumericVector V = colMeans(dvs);
-  NumericVector S(dseat_vec.size());
-  for(int s = 0; s < dseat_vec.size(); s++){
-    S[s] = dseat_vec[s]/(double) nd;
-  }
+  NumericVector S = calc_seat_share(dseat_vec, nd);
   NumericVector eg(dseat_vec.size());
   for(int s = 0; s < dseat_vec.size(); s++){
     eg(s) = -2*V[s] + S[s] + .5;
@@ -116,10 +144,7 @@ NumericVector taugap(double tau, NumericMatrix dvs, IntegerVector dseat_vec, int
   }
 
   NumericVector temp = colSums(expr)/2;
-  NumericVector dseat_share = NumericVector(dseat_vec.size());
-  for(int i =0; i < dseat_share.size(); i++){
-    dseat_share(i) = dseat_vec(i)/(double) nd;
-  }
+  NumericVector dseat_share = calc_seat_share(dseat_vec, nd);
 
   return 2*(temp +.5 - dseat_share);
 }
@@ -138,24 +163,16 @@ NumericVector meanmedian(NumericMatrix dvs){
 }
 
 std::pair<NumericVector,NumericVector> decl_components(NumericMatrix dvs, IntegerVector dseat_vec, int nd) {
-  NumericVector Dwin = NumericVector(dvs.ncol());
-  NumericVector Rwin = NumericVector(dvs.ncol());
+  auto win_sums = calc_win_sums(dvs);
+  NumericVector Dwin = win_sums.first;
+  NumericVector Rwin = win_sums.second;
 
-  for(int c = 0; c < dvs.ncol(); c++){
-    for(int r = 0; r < dvs.nrow(); r++){
-      if(dvs(r,c) >= .5){
-        Dwin(c) += dvs(r,c);
-      } else{
-        Rwin(c) += dvs(r,c);
-      }
-    }
-  }
   for(int i = 0; i < Dwin.size(); i++){
     Dwin(i) = Dwin(i)/dseat_vec(i);
     Rwin(i) = Rwin(i)/(nd-dseat_vec(i));
   }
 
-  NumericVector dseatshare = (NumericVector)dseat_vec/(double)nd;
+  NumericVector dseatshare = calc_seat_share(dseat_vec, nd);
 
   std::pair<NumericVector, NumericVector> out = {
     (Dwin - 0.5) / dseatshare,
@@ -179,18 +196,10 @@ NumericVector declination_angle(NumericMatrix dvs, IntegerVector dseat_vec, int 
 
 // [[Rcpp::export(rng = false)]]
 NumericVector lopsidedwins(NumericMatrix dvs, IntegerVector dseat_vec, int nd){
-  NumericVector Dwin = NumericVector(dvs.ncol());
-  NumericVector Rwin = NumericVector(dvs.ncol());
+  auto win_sums = calc_win_sums(dvs);
+  NumericVector Dwin = win_sums.first;
+  NumericVector Rwin = win_sums.second;
 
-  for(int c = 0; c < dvs.ncol(); c++){
-    for(int r = 0; r < dvs.nrow(); r++){
-      if(dvs(r,c) >= .5){
-        Dwin(c) += dvs(r,c);
-      } else{
-        Rwin(c) += dvs(r,c);
-      }
-    }
-  }
   for(int i =0; i < Dwin.size(); i++){
     Dwin(i) = Dwin(i)/dseat_vec(i);
     Rwin(i) = Rwin(i)/(nd-dseat_vec(i));
@@ -202,17 +211,11 @@ NumericVector lopsidedwins(NumericMatrix dvs, IntegerVector dseat_vec, int nd){
 
 // [[Rcpp::export(rng = false)]]
 NumericVector responsiveness(NumericMatrix dvs, double v, int nd, double bandwidth = .01){
-  NumericVector right = (v + (bandwidth/2.0)) - colMeans(dvs);
-  NumericVector left = (v - (bandwidth/2.0)) - colMeans(dvs);
-  NumericMatrix dvs_right = clone(dvs);
-  NumericMatrix dvs_left = clone(dvs);
+  NumericVector right_shift = (v + (bandwidth/2.0)) - colMeans(dvs);
+  NumericVector left_shift = (v - (bandwidth/2.0)) - colMeans(dvs);
 
-  for(int c = 0; c < dvs.ncol(); c++){
-    for(int r = 0; r < dvs.nrow(); r++){
-      dvs_right(r,c) += right(c);
-      dvs_left(r,c) += left(c);
-    }
-  }
+  NumericMatrix dvs_right = shift_dvs(dvs, right_shift);
+  NumericMatrix dvs_left = shift_dvs(dvs, left_shift);
 
   NumericVector seat_right = (NumericVector)dseatsDVS(dvs_right)/(double)nd;
   NumericVector seat_left = (NumericVector)dseatsDVS(dvs_left)/(double)nd;
@@ -224,15 +227,9 @@ NumericVector responsiveness(NumericMatrix dvs, double v, int nd, double bandwid
 NumericVector biasatv(NumericMatrix dvs, double v, int nd){
   NumericVector dshift = (v) - colMeans(dvs);
   NumericVector rshift = (1-v) - colMeans(dvs);
-  NumericMatrix dvs_dshift = clone(dvs);
-  NumericMatrix dvs_rshift = clone(dvs);
 
-  for(int c = 0; c < dvs.ncol(); c++){
-    for(int r = 0; r < dvs.nrow(); r++){
-      dvs_dshift(r,c) += dshift(c);
-      dvs_rshift(r,c) += rshift(c);
-    }
-  }
+  NumericMatrix dvs_dshift = shift_dvs(dvs, dshift);
+  NumericMatrix dvs_rshift = shift_dvs(dvs, rshift);
 
   NumericVector seat_dshift = (NumericVector)dseatsDVS(dvs_dshift)/(double)nd;
   NumericVector seat_rshift = 1.0 - (NumericVector)dseatsDVS(dvs_rshift)/(double)nd;
@@ -281,4 +278,45 @@ NumericVector smoothseat(NumericMatrix dvs, int nd) {
     sscd(c) = (0.5 - (1.0 - mindem))/((1.0 - maxrep) - (1.0 - mindem));
   }
   return sscd;
+}
+
+// [[Rcpp::export(rng = false)]]
+NumericMatrix k_nearest_vote_sums(NumericMatrix distmat,
+                                  NumericVector totpop,
+                                  double target,
+                                  NumericVector rvote,
+                                  NumericVector dvote) {
+  int m = distmat.nrow();
+  NumericMatrix result(m, 2);
+  colnames(result) = CharacterVector::create("rvote", "dvote");
+
+  for (int i = 0; i < m; ++i) {
+    std::vector<std::pair<double, int>> dist_idx;
+    dist_idx.reserve(m - 1);
+    for (int j = 0; j < m; ++j) {
+      if (i != j) {
+        dist_idx.emplace_back(distmat(i, j), j);
+      }
+    }
+
+    std::sort(dist_idx.begin(), dist_idx.end());
+
+    double cum_pop = 0.0;
+    double cum_r = 0.0;
+    double cum_d = 0.0;
+
+    for (auto& p : dist_idx) {
+      int idx = p.second;
+      cum_pop += totpop[idx];
+      cum_r += rvote[idx];
+      cum_d += dvote[idx];
+      if (cum_pop >= target)
+        break;
+    }
+
+    result(i, 0) = cum_r;
+    result(i, 1) = cum_d;
+  }
+
+  return result;
 }

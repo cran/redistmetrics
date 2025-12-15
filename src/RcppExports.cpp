@@ -46,6 +46,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// bbox_reock
+NumericMatrix bbox_reock(IntegerMatrix dm, NumericVector areas, NumericMatrix extents, const int nd);
+RcppExport SEXP _redistmetrics_bbox_reock(SEXP dmSEXP, SEXP areasSEXP, SEXP extentsSEXP, SEXP ndSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type dm(dmSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type areas(areasSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type extents(extentsSEXP);
+    Rcpp::traits::input_parameter< const int >::type nd(ndSEXP);
+    rcpp_result_gen = Rcpp::wrap(bbox_reock(dm, areas, extents, nd));
+    return rcpp_result_gen;
+END_RCPP
+}
 // talisman
 NumericVector talisman(NumericMatrix dvs, double nd, double alpha, double beta);
 RcppExport SEXP _redistmetrics_talisman(SEXP dvsSEXP, SEXP ndSEXP, SEXP alphaSEXP, SEXP betaSEXP) {
@@ -91,6 +104,26 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type p(pSEXP);
     rcpp_result_gen = Rcpp::wrap(minkowski(v, m, p));
     return rcpp_result_gen;
+END_RCPP
+}
+// compute_mbc_area
+NumericVector compute_mbc_area(const std::string& wkt_collection, const IntegerMatrix& plans, int nd);
+RcppExport SEXP _redistmetrics_compute_mbc_area(SEXP wkt_collectionSEXP, SEXP plansSEXP, SEXP ndSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const std::string& >::type wkt_collection(wkt_collectionSEXP);
+    Rcpp::traits::input_parameter< const IntegerMatrix& >::type plans(plansSEXP);
+    Rcpp::traits::input_parameter< int >::type nd(ndSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_mbc_area(wkt_collection, plans, nd));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_libgeos_init_api
+void cpp_libgeos_init_api();
+RcppExport SEXP _redistmetrics_cpp_libgeos_init_api() {
+BEGIN_RCPP
+    cpp_libgeos_init_api();
+    return R_NilValue;
 END_RCPP
 }
 // log_st_map
@@ -337,6 +370,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// k_nearest_vote_sums
+NumericMatrix k_nearest_vote_sums(NumericMatrix distmat, NumericVector totpop, double target, NumericVector rvote, NumericVector dvote);
+RcppExport SEXP _redistmetrics_k_nearest_vote_sums(SEXP distmatSEXP, SEXP totpopSEXP, SEXP targetSEXP, SEXP rvoteSEXP, SEXP dvoteSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type distmat(distmatSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type totpop(totpopSEXP);
+    Rcpp::traits::input_parameter< double >::type target(targetSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type rvote(rvoteSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type dvote(dvoteSEXP);
+    rcpp_result_gen = Rcpp::wrap(k_nearest_vote_sums(distmat, totpop, target, rvote, dvote));
+    return rcpp_result_gen;
+END_RCPP
+}
 // reindex
 IntegerMatrix reindex(IntegerMatrix dm, int nd);
 RcppExport SEXP _redistmetrics_reindex(SEXP dmSEXP, SEXP ndSEXP) {
@@ -546,10 +593,13 @@ RcppExport SEXP _redistmetrics_RcppExport_registerCCallable() {
 static const R_CallMethodDef CallEntries[] = {
     {"_redistmetrics_polsbypopper", (DL_FUNC) &_redistmetrics_polsbypopper, 6},
     {"_redistmetrics_schwartzberg", (DL_FUNC) &_redistmetrics_schwartzberg, 6},
+    {"_redistmetrics_bbox_reock", (DL_FUNC) &_redistmetrics_bbox_reock, 4},
     {"_redistmetrics_talisman", (DL_FUNC) &_redistmetrics_talisman, 4},
     {"_redistmetrics_contiguity", (DL_FUNC) &_redistmetrics_contiguity, 2},
     {"_redistmetrics_hamming", (DL_FUNC) &_redistmetrics_hamming, 2},
     {"_redistmetrics_minkowski", (DL_FUNC) &_redistmetrics_minkowski, 3},
+    {"_redistmetrics_compute_mbc_area", (DL_FUNC) &_redistmetrics_compute_mbc_area, 3},
+    {"_redistmetrics_cpp_libgeos_init_api", (DL_FUNC) &_redistmetrics_cpp_libgeos_init_api, 0},
     {"_redistmetrics_log_st_map", (DL_FUNC) &_redistmetrics_log_st_map, 4},
     {"_redistmetrics_n_removed", (DL_FUNC) &_redistmetrics_n_removed, 3},
     {"_redistmetrics_agg_p2d", (DL_FUNC) &_redistmetrics_agg_p2d, 3},
@@ -567,6 +617,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_redistmetrics_biasatv", (DL_FUNC) &_redistmetrics_biasatv, 3},
     {"_redistmetrics_RankedMarginalDev", (DL_FUNC) &_redistmetrics_RankedMarginalDev, 1},
     {"_redistmetrics_smoothseat", (DL_FUNC) &_redistmetrics_smoothseat, 2},
+    {"_redistmetrics_k_nearest_vote_sums", (DL_FUNC) &_redistmetrics_k_nearest_vote_sums, 5},
     {"_redistmetrics_reindex", (DL_FUNC) &_redistmetrics_reindex, 2},
     {"_redistmetrics_segregationcalc", (DL_FUNC) &_redistmetrics_segregationcalc, 3},
     {"_redistmetrics_splits", (DL_FUNC) &_redistmetrics_splits, 5},

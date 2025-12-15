@@ -48,8 +48,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -60,7 +61,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -660,6 +661,23 @@ such as:</p>
 <p>In this (small) set of simulations, the Democratic 2020 proposal is
 more similar to the simulated plans than the Republican 2020
 proposal.</p>
+</div>
+<div id="partisan-dislocation" class="section level3">
+<h3>Partisan Dislocation</h3>
+<p>Partisan dislocation is a measure of how different a voter’s district
+is from the partisanship of their k-nearest neighbors.</p>
+<p>Formally, this can be written as:</p>
+<p><span class="math display">\[\textrm{Partisan Dislocation(i)} =
+\textrm{voteshare}_D - \textrm{voteshare}_{KNN(i)}\]</span></p>
+<p>where <span class="math inline">\(KNN(i)\)</span> denotes the
+k-nearest neighbors of a voter in precinct <span class="math inline">\(i\)</span>. Note that for computational reasons
+and to match the inputs of other functions, we do not calculate random
+points for each voter. Instead, we use the distance between precincts to
+determine the k-nearest neighbors. To create a single score for a
+district, we can take the mean of the partisan dislocation scores for
+each voter in the district. Following Deford, Eubank, and Rodden 2022,
+we can also take the absolute value of the partisan dislocation scores
+to get the partisan dislocation score for a district.</p>
 </div>
 </div>
 

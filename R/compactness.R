@@ -236,15 +236,11 @@ comp_reock <- function(plans, shp, epsg = 3857, ncores = 1) {
 
   # process objects ----
   shp <- planarize(shp, epsg)
-  if (ncores > 1) {
-    shp_col <- wk::as_wkt(geos::geos_make_collection(geos::as_geos_geometry(shp)))
-  } else {
-    shp_col <- geos::geos_make_collection(geos::as_geos_geometry(shp))
-  }
   plans <- process_plans(plans)
-  n_plans <- ncol(plans)
-  dists <- sort(unique(c(plans)))
-  nd <- length(dists)
+  if (ncol(plans) == 0) {
+    return(numeric(0))
+  }
+  nd <- vctrs::vec_unique_count(plans[, 1])
 
   # set up parallel ----
   nc <- min(ncores, ncol(plans))
@@ -259,22 +255,30 @@ comp_reock <- function(plans, shp, epsg = 3857, ncores = 1) {
 
   # compute ----
   areas <- geos::geos_area(shp)
-  out <- foreach::foreach(map = seq_len(n_plans), .combine = 'c', .packages = c('geos'),
-                          .export = 'geox_union') %oper% {
-    ret <- vector('numeric', nd)
+  area_mat <- agg_p2d(plans, vote = areas, nd = nd)
 
-    for (i in seq_len(nd)) {
-      united <- geos::geos_make_collection(geos::geos_geometry_n(shp_col, which(plans[, map] == dists[i])))
-      area <- sum(areas[plans[, map] == dists[i]])
-
-      mbc <- geos::geos_area(geos::geos_minimum_bounding_circle(united))
-      ret[i] <- area / mbc
-    }
-
-    ret
+  if (nc == 1) {
+    chunks <- rep(1L, ncol(plans))
+  } else {
+    chunks <- cut(seq_len(ncol(plans)), nc, labels = FALSE)
   }
 
-  out
+  plan_chunks <- lapply(seq_len(max(chunks)), function(x) {
+    plans[, chunks == x, drop = FALSE]
+  })
+
+  shp_col_wkt <- geos::as_geos_geometry(shp) |>
+    geos::geos_make_collection() |>
+    geos::geos_write_wkt()
+
+  out <- foreach::foreach(
+    map = seq_along(plan_chunks), .packages = c('redistmetrics'),
+    .export = 'compute_mbc_area', .combine = 'c'
+  ) %oper% {
+    c(compute_mbc_area(shp_col_wkt, plan_chunks[[map]], nd))
+  }
+
+  c(area_mat) / c(out)
 }
 
 #' Calculate Convex Hull Compactness
@@ -816,6 +820,79 @@ comp_box_reock <- function(plans, shp, epsg = 3857, ncores = 1) {
   }
 
   out
+}
+
+#' Calculate Bounding Box Reock Compactness
+#'
+#' Box reock is the ratio of the area of the district by the area of the minimum
+#' bounding box (of fixed rotation). Scores are bounded between 0 and 1, where 1 is
+#' most compact.
+#'
+#' @templateVar plans TRUE
+#' @templateVar shp TRUE
+#' @templateVar epsg TRUE
+#' @templateVar ncores TRUE
+#' @template template
+#'
+#' @returns A numeric vector. Can be shaped into a district-by-plan matrix.
+#' @export
+#' @concept compactness
+#'
+#' @examples
+#' #' data(nh)
+#' data(nh_m)
+#' # For a single plan:
+#' comp_bbox_reock(plans = nh$r_2020, shp = nh)
+#'
+#' # Or many plans:
+#' comp_bbox_reock(plans = nh_m[, 1:5], shp = nh)
+comp_bbox_reock <- function(plans, shp, epsg = 3857, ncores = 1) {
+
+  # process objects ----
+  shp <- planarize(shp, epsg)
+  if (ncores > 1) {
+    shp_col <- wk::as_wkt(geos::geos_make_collection(geos::as_geos_geometry(shp)))
+  } else {
+    shp_col <- geos::geos_make_collection(geos::as_geos_geometry(shp))
+  }
+  plans <- process_plans(plans)
+  n_plans <- ncol(plans)
+  dists <- sort(unique(c(plans)))
+  nd <- length(dists)
+
+  # set up parallel ----
+  nc <- min(ncores, ncol(plans))
+  if (nc == 1) {
+    `%oper%` <- foreach::`%do%`
+  } else {
+    `%oper%` <- foreach::`%dopar%`
+    cl <- parallel::makeCluster(nc, setup_strategy = 'sequential', methods = FALSE)
+    doParallel::registerDoParallel(cl)
+    on.exit(parallel::stopCluster(cl))
+  }
+
+  # compute ----
+  areas <- geos::geos_area(shp)
+  extents <- geos::geos_extent(shp) |>
+    as.matrix()
+  if (nc == 1) {
+    chunks <- rep(1L, ncol(plans))
+  } else {
+    chunks <- cut(seq_len(ncol(plans)), nc, labels = FALSE)
+  }
+
+  plan_chunks <- lapply(seq_len(max(chunks)), function(x) {
+    plans[, chunks == x, drop = FALSE]
+  })
+  out <- foreach::foreach(
+    map = seq_along(plan_chunks),
+    .combine = 'cbind', .packages = c('redistmetrics'),
+    .export = 'bbox_reock'
+  ) %oper% {
+    bbox_reock(dm = plan_chunks[[map]], areas = areas, extents = extents, nd = nd)
+  }
+
+  c(out)
 }
 
 #' Calculate Y Symmetry Compactness

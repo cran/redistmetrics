@@ -9,6 +9,10 @@ schwartzberg <- function(from, to, area, perimeter, dm, nd) {
     .Call(`_redistmetrics_schwartzberg`, from, to, area, perimeter, dm, nd)
 }
 
+bbox_reock <- function(dm, areas, extents, nd) {
+    .Call(`_redistmetrics_bbox_reock`, dm, areas, extents, nd)
+}
+
 talisman <- function(dvs, nd, alpha = 1, beta = 1) {
     .Call(`_redistmetrics_talisman`, dvs, nd, alpha, beta)
 }
@@ -23,6 +27,14 @@ hamming <- function(v, m) {
 
 minkowski <- function(v, m, p) {
     .Call(`_redistmetrics_minkowski`, v, m, p)
+}
+
+compute_mbc_area <- function(wkt_collection, plans, nd) {
+    .Call(`_redistmetrics_compute_mbc_area`, wkt_collection, plans, nd)
+}
+
+cpp_libgeos_init_api <- function() {
+    invisible(.Call(`_redistmetrics_cpp_libgeos_init_api`))
 }
 
 log_st_map <- function(g, districts, counties, n_distr) {
@@ -91,6 +103,10 @@ RankedMarginalDev <- function(dvs) {
 
 smoothseat <- function(dvs, nd) {
     .Call(`_redistmetrics_smoothseat`, dvs, nd)
+}
+
+k_nearest_vote_sums <- function(distmat, totpop, target, rvote, dvote) {
+    .Call(`_redistmetrics_k_nearest_vote_sums`, distmat, totpop, target, rvote, dvote)
 }
 
 reindex <- function(dm, nd) {

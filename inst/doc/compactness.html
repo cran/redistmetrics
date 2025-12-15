@@ -48,8 +48,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -60,7 +61,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -352,7 +353,7 @@ of plans, or a <code>redist_plans</code> object).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(redistmetrics)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">data</span>(nh)</span></code></pre></div>
 <p>The New Hampshire proposed Republican plan looks like:</p>
-<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+<p><img role="img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAABI1BMVEUAAAAAADoAAGYAOpAAZrYAv8QzMzM6AAA6ADo6AGY6kNtNTU1NTW5NTY5NXl5NXp1NZG9NbqtNechNjqJNjshTb7VZWVlkTW5mAABmADpmtv9pq+RuTU1uTW5uTY5ubo5ubqtujshunZ1uq81uq+Rvtf95TU1/aW6DTW6OTU2OTWmOTW6OTY6Obk2Obm6ObquOg02Ojo6Ooo6OyOSOyP+QOgCQtpCQ2/+dXlmrbk2rbmmrbm6rbo6rjm6ryKurzaur5Mir5OSr5P+1q262ZgC2///Ig03Ijk3Ijm7IyI7I5KvI///Nq27bkDrb///kjlnkq27kq47k/8jk/+Tk///r6+v4dm3/omT/tmb/yI7/25D/5Kv//7b//8j//9v//+T///8cQrU/AAAACXBIWXMAAA7DAAAOwwHHb6hkAAATLUlEQVR4nO2di4PcRBnAA5KiHj6q5ydCpVRPEa3i46Bq8cEJFj3QU7or1+No/v+/ws3OfM+ZPHaT3Z1k54PuK5M0++v3zsymqLK0SnHoE0hdikOfQOpSHPoEUpfi0CeQuhSHPoHUpTj0CaQuxaC9F1L0u0CGbe61+zhItBSD9s6AOiQD6pAMqEMyoA7JgDokA+qQDKhDMqAOyYA6JAPqkL0Aggwo2AyQAbVthrJkQpABmc2w4sOAEFYGJIjUglaWATUAWhECqU0ZkKMDyMczyoDU5tqeykAyIN4cwZMBqc0xQhkQb84alAENAhTlkwFlQH03x/lkQBnQQEBrQtMHNEZLsEWFMqBmPhmQ39zEJwNymxv5ZEDrzc18MqBaWvhkQASo7o/hn5QBPf/DeVVdnZycfOOyfnv79sndp27Lzb3z+vGNy9EBVa5ZxogEpOQAXZ2sMDw5F7iuTqvnfzp5sAJUM9sRIGtlxCg1QDf3f3lePX984d/ePryskVz/rvrP+c0b/zjdDSAACN0QeEkL0PPHH6x0ZmVXJydrJbp582l1+4sLD+hypVkO0J07d9qPvQmgFYRYN9o/jf+9e0sRfnR1VhvVzQ8vvBZd310Dcib2xuXtO097atAGp2G9jgGUlAatFGbtpGtZ+yGvQW7jCs3V2fgmRlcLtXNO0knX0evk5IwBeR9EgJ4//vOuAAlMHlCKPsjFrdqwnr9/uX53VkcxAuRD2aiAjANCMl6HkgRUa9IrF2siMg9a687VHgBRVpQioN4yIiDlohFQfw1abx8HiZZi0N7jAVqQv4EMqAmQ8NEZULhZTetAH8Rx/ugBBXwyIM0nA+pKFDmJhgwoBogctHpN5fxxA9KVhnnOGpQBbQgoIkcOyBRi2PvIGhQFRL3pDCjGh3scGZAChM5GXMsQhI4bkMgQm8LYUQOK1hihjR0toEgKlAF1AIp66QwoA2r4PPRBpQxrmEpnQBKQaLpmDeoVxjKgDCgDGqUW40tjmtBxA1qIaGUUJwPyhDSNDKgdUARVBhQCyoliC6BgrsfRA4JQgzIgCajBSQuDO2ZAJrrbya5HD0jnzWBn3PuPjxgQzQH22hNToMQA+XnSOF2al7XsaDGL1h1TeZQJArpyaxD8k1/WsrvFLODdDs1+kYVHioDWi1noCZe17G4xC9lW5OIPOajOw+9IIoDcYhZ8qnBZy+aLWXoKNFiYDm2dh9mfBrnFLPhU4bKWzRez9NKgYH60yhehvwbtDZBfzCLXtFS0vG70xSxBSNcX6jcwsb0B8otZ5JoWDWjUxSxByIolQWkBqmyY52Ut4y9mAQWnBBvj0we0tqn1shYGNOJiFrrOgwpjm4skSQHqLUMBAabPXG6YwiNNDeotAwGB0xkZzTMggrOQNTyDyIAcHqMqYbPsuAGphLChWxZcnT8iQC01VwZkAUGMy/ECcj+jLcp26nDY6zxHCWiNYSEDFQg6qjqNrUaYNyA717cU9YWwKrFkTDen5w5ItgyVk5FNenVdw1b2RwAIQCIKc0NiJvVrOKBnX33v5aJ4raq+fLcoXjLvX/woDUBsMqGlNbXIdOdjAKCXv/Kv6tMXP/ry3Zeq+o98X326ep0AIF1U2LaP8koU93WrcYCTfvbya7XaPPq81pbVg3r/xauvJQBIRuyIMzK+x/U89BgYZGKPHJBaWVbP+P7TYi1fTwCQKC3w0X59kfpgEbtzQF3WtV9AQWEhfTPmQFCyjzIRbwRALzxyJibfJwJoAUaBQi0q0bqia1bHAEROmt6vVKiT0n4AgW6M0Suwzgi3QJAPDAfEYV6879SiPQFSOFSVZa6LQcn/jwRomBSD9t4MENLQ9YV0N0D5UpAmzRqQrCXMbCmtRiB16EgBOY0J3HOJcR6sAh0hoPA3JYUFNgHqIjRpQHaWXQDJptJHB4i9tPzG4Y9QQEk6tCmg+u8fB4mWYtDe/QGVwjcrPVKAvI/G3BBGAdQ0PjFAolTX39sUXSLQYVI9EFA0M4e+vzC8H0Dax2izMnWrKMdGMjFYxiRNQKLhYwO9UKeRfdAUAMkwFnYUFYrj1CAd5203TNmarUOoeJ01IJ0HRTLFkl2R8trU7Zi3BtlMWpqatSTtgeTLYwJENVkUUKhVqQEyazWG3ngkqkAEwFayGpqwtp0Beva1lotjUUB6rcbgG4+Q3w1JlWHCbHutOwf0eevVwxggs1Zj6I1HgChEAFHUilmYRrkjQB++8N6GGmTXamx94xE8QVSUOB+sQtjoGgD1+stif//YJmbXavS78UiLArE5he1EcSWVemb71aCNAQVrNfrdeKQPIKKk5rLqK6k2P2K1SwVQsFaj341HmgFBxL0oQNFoL97vOlHcPIrpMN/vxiMtQSwEpLxRWFiId87qEgbU+8YjbSYWmVsmaTQT8haYHKDe0hNQaaJ8qRqMzYD8mF0DapU9AbI1qPogDohnMfjO4kwBmcum0rKCnj0lAgCiCJlJP6gBkPYoELcswOgfBwczBmQ9bhltuuruUBDsjgsQ84iWHjsA1DQ+BUCxq6eU+0HJk6XihECOn/plnxggWYeGegHWy0QBjdByLWOSDCBkFNpTpPIIdE0kB3MEpK+HbQ5o06n2kwOk2xrG1JpL1IgNzhSQaXXob9wFCMzncwQUccx9AMkan4uSGQKKzZCKTBSPx3lRkvl8YIaAQg0B0iOTA7GKBZnR4FqsHdAztzbqAIAgDF02PpkyFURVEIa97jl42wD64geP3NTyvQNCZVH20gSsDAqmsA+5G0Cfv7R6+LBZhXYGSPsY+2Vtx6MEQ2j1NlCynQCqpdaifQPSVWrQwGATwy1LiAPatQZV9dLMljVjOwIUVPHqghhbHRGqgYDiw4T6eemtAX3xatuaut0AiifG+rohoCKBB7RkJXIvjMfaEaD1Cs1DAtIBm7NpWENxhNbxC0iHEJQp63cCqIPPrgA1Xi0U/sgpDUX3tReCOCBX1u8EkFu5uu8oRgvoSqtL0umws2EonhoREkq0uyjWJjsCFFt0wf4GOKx7lWEHDeoRliLezQcQXusLi1MOTNrd6ABm6CHcOQISRamyuBoQwBKM0/HKZH11r0urEwIEFMNlCqQTY1q1Iu0spj/srWcFiLMctChqXAh9wlDPpsW8ZGqNcLcElNxVDTImGab5WTkj5ZZRdWDJerTkWLYloGFSDNq7AZDPmcOeTkl65aKcyw8RCsYy756kgfWwsckAYmWJA0KPUkr/rKxKKBM6oBkBUplhZP4GuVz/mrSG1UYolhg9S0ClzaeBTMZR8IwAbUw7ISAH3cMJTRQQhjAJyH93HadkxxU5uf/EoVIBtJ6jeE030+h1X41mQLLRYQAI4VpebkCP1SNT3CegepHGeka0m9va674aleYjDQOfIioSJ6RJYUrV0e/YIyBcpOFB9LuvBgJCXZGNH3baGoAGFPAjQICZdxqAaJGG16Du+2oYDcI0SClQGNpVj1XVGAaQ7yNpQLuAEZMi/AgXadzcc79k331fDbl3JHuWQY0BqFguP4PQxPzBZHlwOA0SN9TAFRpVj/tqBE5ad6DRz5KyAKdByjtBzAcl5aTlDTWe0J1HOu+rYQBhy0zk00BuCI2PDct4H7CA/L5JAKpcmPeLoKq+99WIRTH1Cj3SkpCBSKShD6A0NMgD8nfT6H1fjWZA1NkA0iwiBFiFRcDQ86yq+ZgGUaKoK3ynTS68g+JEGqUBpRLmN5AIIBLlm/m1cOLqcqpyzmRdnlYPPhMBJLDIIBYCAkAnxEoT8NGAtm25DpNi0N5tgLzD0YAAW2XWSxtCqjWEOGcByPog3T/0RYPofoCko+0NGFA55LrYMCkG7W0BiQLDqhKn1SqOgdQdUJblWiI8x2MmgOSUDeGjWbPMj7soIwvSRmwHzccHQVnGg1gkkMlL0NIxC1ckAHVdnJ8IoNLwICABIN1DU3ojRB1nDoBETkhWpL0S/hgFkgz5KKVSzqsN0UQAoYWJK4Wm68FTY0qlQuJZd85EHGxVomoKgBbi4jJmQSbyg4EGAR/zuKTjzAsQuuEyVCF6QyokdEawYfOjzkkLoUkAMuVo4J9LVYHIhFsYGAUw6audQrbp0AQBGRhh+wxTbLI0qTiWD9rZlAGpukJNaDWxTVEruVu9ZHMTfPDKT7uVTQCQarNKL2P0RikP1v3YxAdXeqh8UVgrNAb7KQAKPA4G/SggoN8fx7EigIHow9K+2HybESDtpnUCqQGC7ipKWIzU7xclNBVAJqqD4SKMUOqZma8onwxd9zADQGUMV+ituUULMrSTeal6nmLZZDUoohxac0JTQxUyCSO5aKlA5IamCcj2VxWgSJtIodPrfUAYmTgeZtQxPlMExPrUpDkIqIwAIp8EamBjJjQFQDJZEYliKyAq732WCEJ7EBKUoq6bbhQDzHbB2FcLIUbJGgSqCYuOCHAaVVO1MQVAwuf0AeS0hVtHps0hX+EkoUknijJp5uBEZqQJCVuifYIyVdQbonqZLKBFRIM4y9Gao1AIFWrjI6xy+oBMiWEbjdqG/Bc3LlomQ0vDfpqZdJAFmVAuGvjGyYD4LOKilQI11hrpAwpuOCsVSIX9wAtLrQIO7xYQHSNmZekDMrWFLCxMPhQACl8AJ0EsSw5noSuaDqDAL4dBXhMiGJYUcPlKFrj0uWJp86HkAVEs8l4iqFvjgKw5gX7msh7wERNGo0KTAVRykxAsn7gGeRBq4kIAChVtjcjnBIcCZBaz9LrxiAUkgVhnzQYlXrmshzda0+K8cslOHQ4DSC9m6XfjkWohAhXNS6VSS8LzGqSTHgSEZifAIFOBjtfdHwKQWczS78YjlZkdFIR8oE0endYQH91FJ5E3s+LgJh53AEB2MUvfG48EbRtVd/Em7YUkIFFcKEMzgJZCwXr/7PGIgOxilr43HhE+CC93GSdNzlu6aW1Lop437ggfQO0kdGhfGhQsZul34xFUEnREcq6dqMOEwxaApKNZGgAKkNYsnyjBfgEFi1n63HgElJLg1UDsn+maDFEKzXHPJlItNS4gNePdwI86RJjnxSw9bjyicmbgqQbaFUmnLeM7GRsAOiH/AIFQKuDZuB0PkgfxYpbuG48wICraZQbEEYwuMksnpIxtCYHioJ7wOxy8kISSzqTZkDDW62tkmBKJ6A9oMSIiuTf4oQIk3gLxWXhCEwAkGCidYRFGBuyLZCdIKQe6YwYU/nH/NEvvplMGJE1MIQkKev5QPJIySUBL8tlWk8ito/buvdToLRFADT1XlQvJT1CZhDcSWiL8MfvppQa0/1Kjv0T4iKRHAZKNNDlA2Bg5Z7auJelPZNM0AWmdiQAC7Obo0lVEKOl/nFppr0P6NB1AEJoS+ePQS3PMhzgg5YkJEBGZ3nUxECCEyqi2tOgQsS5hIqkBaW8MTocg/CmBSQESX5uJgFEoHdpMGCOd4fSIwQEvzJ86IPOsMkXk1AGI9Yg/nzaggJDIGK2JBexAAaIMGpNmp0qLWQFiQwp8ELQA8iqj00WfLc8LEDkjvjxDJJgJpUGUAGJOSHyWuqM6YUDhtAXSFs6VtfiU0VMswXapwfCZOKAFRPqH5ll+ImpWMkv6+SX2QzMCVA0DVPJMcp8BzQ7QIiAElostWHX6pCuwLVQodUCRX13oUCEDqATx27eYLc4JEP8CXjeg4DoZ0GRy1KAIgKkDWizkz+MEUStEpgL/Oi2I2tasADVKIzm6Vu00qFGB5g6oZUAM2mZHmDmgkQZkQBlQBpQBZUBaMqAOyYA6JAPqkAyoQzKgDsmAesudww/oPMBWUox0nAyoQzKgY5Xi0CeQuhSHPoHUpTj0CaQuxaFPIHUpttjHreY4r27u1Y/4iZ99Xy/v+Pd6wHfEADFZXw7gpWcNR+AB+gjuFH57yp+aA1zXf/H16Rbfzkix5X7Xd5/WKznq+/5U6gZbV2erk/3NWXX9zdd5gFy0KAbU30N8qfAIPCByhOu7n/zYfdpwgPWLoVJst1v93df/PuvzUjfYevPp88d/fvO/P3/rggeoRYs8oHryil841HAEHhAe4f7PPnj8V1qIFDnAU//ZMCm22w1X/7j1QPIGW6tvcvvOZ+//7bsPL3mAXLSoB3gLaj6CHxAe4fentw//SUvZIge4vH14OQxOLcVWe+H6unqlVKVvsLV6vnlQPfn+Xx6IAXLRoh6A37/xCH5AcITbn/7k5gGv2Yoc4PzmwRAyXoqt9rp2nvH2bWHkeCepq/Or8+p/3/rkTAyQixbVAF4f3HAEo0E84Prbr1+dqU/NAa7PxnBBWwJ64s793rn8zL+5Pv34ovr791YPPEAuWpQD4oBiA4IjPPnRg48v1KfmADcPPh7BBW0HyHk/5iNvsFXd/mrlHv/41v1LMUAuWhQDKmVBkSPwAHuEzx5/8Pj+JX8aHGB1kvdHcEHbAXJa7dMhc4Ot1Vc5XQ349akaILIYMaBy37/5CGKAOcLqFJ6cYnYUO8BKn0bIgnIm3SnFoU8gdSkOfQKpS3HoE0hdikOfQOpSHPoEUpfi0CeQuhSHPoHUpTj0CaQu/wdLvolzpxd5tQAAAABJRU5ErkJggg==" /><!-- --></p>
 <div id="area-based-compactness" class="section level1">
 <h1>Area-Based Compactness</h1>
 <div id="polsby-popper-compactness" class="section level2">
@@ -401,6 +402,20 @@ most compact.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">comp_box_reock</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.5769441 0.4196260</span></span></code></pre></div>
 </div>
+<div id="bounding-box-reock-compactness" class="section level3">
+<h3>Bounding Box Reock Compactness</h3>
+<p>Bounding Box Reock compactness compares the area of the district
+(<span class="math inline">\(A_D\)</span>) to the area of the bounding
+box (<span class="math inline">\(A_{BB}\)</span>).</p>
+<p>Formally, it can be written as:</p>
+<p><span class="math display">\[ \textrm{Bounding Box Reock} =
+\frac{A_D}{A_{BB}} \]</span></p>
+<p>Scores range from 0 to 1, where 0 is the least compact and 1 is the
+most compact.</p>
+<p>Bounding Box Reock compactness can be computed with:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">comp_bbox_reock</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.4380166 0.4194030</span></span></code></pre></div>
+</div>
 <div id="convex-hull-compactness" class="section level3">
 <h3>Convex Hull Compactness</h3>
 <p>Convex Hull compactness compares the area of the district (<span class="math inline">\(A_D\)</span>) to the area of the convex hull
@@ -410,8 +425,8 @@ most compact.</p>
 \frac{A_D}{A_{CV}} \]</span> Scores range from 0 to 1, where 0 is the
 least compact and 1 is the most compact.</p>
 <p>Convex Hull compactness can be computed with:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">comp_ch</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.6763964 0.6626738</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">comp_ch</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.6763964 0.6626738</span></span></code></pre></div>
 </div>
 <div id="skew-compactness" class="section level3">
 <h3>Skew Compactness</h3>
@@ -423,8 +438,8 @@ minimum bounding circle (<span class="math inline">\(A_{MBC}\)</span>).</p>
 \]</span> Scores range from 0 to 1, where 0 is the least compact and 1
 is the most compact.</p>
 <p>Skew compactness can be computed with:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">comp_skew</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.3640221 0.2481286</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">comp_skew</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.3640221 0.2481286</span></span></code></pre></div>
 </div>
 <div id="x-symmetry-compactness" class="section level3">
 <h3>X-Symmetry Compactness</h3>
@@ -436,8 +451,8 @@ D^{X}))\)</span>) to the area of the district (<span class="math inline">\(A_D\)
 D^{X}))}{A_D} \]</span> Scores range from 0 to 1, where 0 is the least
 compact and 1 is the most compact.</p>
 <p>X-Symmetry compactness can be computed with:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">comp_x_sym</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.6995961 0.3436371</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">comp_x_sym</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.6995961 0.3436371</span></span></code></pre></div>
 </div>
 <div id="y-symmetry-compactness" class="section level3">
 <h3>Y-Symmetry Compactness</h3>
@@ -449,8 +464,8 @@ D^{Y}))\)</span>) to the area of the district (<span class="math inline">\(A_D\)
 D^{Y}))}{A_D} \]</span> Scores range from 0 to 1, where 0 is the least
 compact and 1 is the most compact.</p>
 <p>Y-Symmetry compactness can be computed with:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">comp_y_sym</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.7307813 0.4346136</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">comp_y_sym</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.7307813 0.4346136</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -469,8 +484,8 @@ longer side of that box.</p>
 \frac{Width}{Length} \]</span> Scores range from 0 to 1, where 0 is the
 least compact and 1 is the most compact.</p>
 <p>Length-Width compactness can be computed with:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">comp_lw</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.9161576 0.5223455</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">comp_lw</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.9161576 0.5223455</span></span></code></pre></div>
 </div>
 <div id="boyce-clark-compactness" class="section level3">
 <h3>Boyce-Clark Compactness</h3>
@@ -487,8 +502,8 @@ absolute deviation.</p>
 \frac{100}{n}\big|\]</span> Scores range from 0 to <span class="math inline">\(\infty\)</span>, where 0 is the most compact and
 <span class="math inline">\(\infty\)</span> is the least compact.</p>
 <p>Boyce-Clark compactness can be computed with:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">comp_bc</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.7921350 0.8330235</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">comp_bc</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh)</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.7921350 0.8330235</span></span></code></pre></div>
 </div>
 <div id="fryer-holden-compactness" class="section level3">
 <h3>Fryer Holden Compactness</h3>
@@ -504,8 +519,8 @@ distance between the people in unit <span class="math inline">\(i\)</span> and <
 When used with a denominator, a score of 1 is most compact and higher
 scores are less compact.</p>
 <p>Fryer-Holden compactness can be computed with:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">comp_fh</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh, <span class="at">total_pop =</span> pop)</span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="co">#&gt; [1] 5.374691e+22 5.374691e+22</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">comp_fh</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh, <span class="at">total_pop =</span> pop)</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co">#&gt; [1] 5.374691e+22 5.374691e+22</span></span></code></pre></div>
 </div>
 </div>
 <div id="adjacency-based-compactness" class="section level1">
@@ -523,8 +538,8 @@ consider the edges removed for a plan <span class="math inline">\(\pi\)</span>.<
 <p><span class="math display">\[ \textrm{Edges Removed} = E(a) -
 E_\pi(a)\]</span> Larger scores are less compact.</p>
 <p>Edges-Removed compactness can be computed with:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">comp_edges_rem</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh, <span class="at">adj =</span> nh<span class="sc">$</span>adj)</span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co">#&gt; [1] 73 73</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">comp_edges_rem</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh, <span class="at">adj =</span> nh<span class="sc">$</span>adj)</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="co">#&gt; [1] 73 73</span></span></code></pre></div>
 </div>
 <div id="fraction-kept-compactness" class="section level3">
 <h3>Fraction Kept Compactness</h3>
@@ -539,8 +554,8 @@ removed for a plan <span class="math inline">\(\pi\)</span>.</p>
 E_\pi(a)}{E(a)}\]</span> Scores range from 0 to 1 where 0 is least
 compact and 1 is most compact.</p>
 <p>Fraction Kept compactness can be computed with:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">comp_frac_kept</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh, <span class="at">adj =</span> nh<span class="sc">$</span>adj)</span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.9584755 0.9584755</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">comp_frac_kept</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh, <span class="at">adj =</span> nh<span class="sc">$</span>adj)</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.9584755 0.9584755</span></span></code></pre></div>
 </div>
 <div id="log-spanning-tree-compactness" class="section level3">
 <h3>Log Spanning Tree Compactness</h3>
@@ -554,8 +569,8 @@ compactness component of the Sequential Monte Carlo (McCartan and Imai
 \textrm{log}(n_st)\]</span></p>
 <p>A larger number of log spanning trees is more compact.</p>
 <p>Log Spanning Tree compactness can be computed with:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">comp_log_st</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh, <span class="at">adj =</span> nh<span class="sc">$</span>adj, <span class="at">counties =</span> county)</span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="co">#&gt; [1] -Inf -Inf</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">comp_log_st</span>(<span class="at">plans =</span> nh<span class="sc">$</span>r_2020, <span class="at">shp =</span> nh, <span class="at">adj =</span> nh<span class="sc">$</span>adj, <span class="at">counties =</span> county)</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="co">#&gt; [1] -Inf -Inf</span></span></code></pre></div>
 </div>
 </div>
 <div id="general-notes-on-speed" class="section level1">

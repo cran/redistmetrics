@@ -200,6 +200,7 @@ splits_sub_count <- function(plans, shp, sub_admin) {
   if (is.null(sub_admin)) {
     cli::cli_abort('{.arg sub_admin} not found in {.arg shp}.')
   }
+  any_na <- anyNA(sub_admin)
 
   # plans <- plans[!is.na(sub_admin), , drop = FALSE]
   # sub_admin <- sub_admin[!is.na(sub_admin)]
@@ -213,7 +214,7 @@ splits_sub_count <- function(plans, shp, sub_admin) {
   }
   nc <- vctrs::vec_unique_count(sub_admin)
 
-  if (anyNA(sub_admin)) {
+  if (any_na) {
     admin_splits_count(plans, sub_admin, nd, nc)[-max(sub_admin), ] |>
       `rownames<-`(value = stats::na.omit(row_names))
   } else {
@@ -259,6 +260,53 @@ splits_total <- function(plans, shp, admin) {
   nc <- vctrs::vec_unique_count(admin)
 
   rep(colSums(admin_splits_count(plans, admin, nd, nc)) - nc, each = nd)
+}
+
+
+#' Count the Total Sub-Administrative Unit in Each Plan
+#'
+#' Counts the total number of sub-administrative splits.
+#'
+#' @templateVar plans TRUE
+#' @templateVar shp TRUE
+#' @templateVar sub_admin TRUE
+#' @template template_nosf
+#'
+#' @return numeric matrix
+#' @export
+#' @concept splits
+#'
+#' @examples
+#' data(nh)
+#' data(nh_m)
+#' # For a single plan:
+#' splits_sub_total(plans = nh$r_2020, shp = nh, sub_admin = county)
+#'
+#' # Or many plans:
+#' splits_sub_total(plans = nh_m[, 3:5], shp = nh, sub_admin = county)
+#'
+splits_sub_total <- function(plans, shp, sub_admin) {
+  # prep inputs ----
+  plans <- process_plans(plans)
+
+  # prep admin ----
+  sub_admin <- rlang::eval_tidy(rlang::enquo(sub_admin), data = shp)
+  if (is.null(sub_admin)) {
+    cli::cli_abort('{.arg sub_admin} not found in {.arg shp}.')
+  }
+  any_na <- anyNA(sub_admin)
+
+  # plans <- plans[!is.na(sub_admin), , drop = FALSE]
+  # sub_admin <- sub_admin[!is.na(sub_admin)]
+  sub_admin <- make_id(sub_admin)
+  nc <- vctrs::vec_unique_count(sub_admin)
+  nd <- vctrs::vec_unique_count(plans[, 1])
+
+  cnts <- admin_splits_count(plans, sub_admin, nd, nc)
+  if (any_na) {
+    cnts <- cnts[-max(sub_admin), , drop = FALSE]
+  }
+  rep(colSums(cnts) - nc, each = nd)
 }
 
 #' Fuzzy Splits by District (Experimental)

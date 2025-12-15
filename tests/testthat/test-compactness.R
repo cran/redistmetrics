@@ -119,6 +119,16 @@ test_that("comp_box_reock works", {
   expect_equal(a, e, tolerance = 1e-4)
 })
 
+test_that("comp_bbox_reock works", {
+  a <- comp_bbox_reock(nh$r_2020, shp = nh)
+  e <- c(0.43801662422183, 0.419403041819957)
+  expect_equal(a, e, tolerance = 1e-4)
+
+  a <- comp_bbox_reock(nh_m[, 1:2], shp = nh)
+  e <- c(0.438226865127108, 0.47552842532256, 0.438016624221829, 0.419403041819957)
+  expect_equal(a, e, tolerance = 1e-4)
+})
+
 test_that("comp_y_sym works", {
   a <- comp_y_sym(nh$r_2020, shp = nh)
   e <- c(0.730781251478271, 0.434613580171782)
